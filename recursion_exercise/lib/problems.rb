@@ -12,9 +12,9 @@
 # pow(3, 4) # => 81
 # pow(4, 3) # => 64
 def pow(base, exponent)
-    return 1 if exponent == 1
-    
-end
+    return 1 if exponent == 0
+    base * pow(base, exponent - 1)
+    end
 
 
 # Write a method, lucas_number(n), that takes in a number.
@@ -110,6 +110,16 @@ end
 #     2-dimensional array: [['some data']]
 #     3-dimensional array: [[['some data']]]
 def flatten(data)
-
-
+    result = []
+    if !data.kind_of?(Array)
+        return [data]
+    end
+    data.each do |ele|
+        if ele.kind_of?(Array)
+            result += flatten(ele)
+        else  
+            result << ele
+        end
+    end
+    result
 end
