@@ -6,14 +6,17 @@
 #
 # all_vowel_pairs(["goat", "action", "tear", "impromptu", "tired", "europe"])   # => ["action europe", "tear impromptu"]
 def all_vowel_pairs(words)
-    vowels = "aeiou"
     newarr = []
-    words.each do |word|
-        if vowels.all?.include?(word)
-            newarr << word
+    vowels = "aeiou".split("")
+    words.each_with_index do |word1, idx1|
+        words.each_with_index do |word2, idx2|
+            pair = word1 + " " + word2 
+            if idx2 > idx1 && vowels.all? {|ele| pair.include?(ele)}
+                newarr << pair
+            end
         end
     end
-    newarr
+return newarr
 end
 
 
@@ -25,7 +28,12 @@ end
 # composite?(9)     # => true
 # composite?(13)    # => false
 def composite?(num)
-    
+    (2...num).each do |div|
+        if num % div == 0
+            return true
+        end
+    end
+    return false  
 end
 
 
@@ -39,8 +47,19 @@ end
 # find_bigrams("the theater is empty", ["cy", "em", "ty", "ea", "oo"])  # => ["em", "ty", "ea"]
 # find_bigrams("to the moon and back", ["ck", "oo", "ha", "at"])        # => ["ck", "oo"]
 def find_bigrams(str, bigrams)
-
+newarr = []
+    bigrams.each do |ele|
+        if str.include?(ele)
+        newarr << ele
+        end
+    end
+return newarr
 end
+
+
+
+
+
 
 class Hash
     # Write a method, Hash#my_select, that takes in an optional proc argument
@@ -56,10 +75,18 @@ class Hash
     # hash_2 = {4=>4, 10=>11, 12=>3, 5=>6, 7=>8}
     # hash_2.my_select { |k, v| k + 1 == v }      # => {10=>11, 5=>6, 7=>8})
     # hash_2.my_select                            # => {4=>4}
-    def my_select(&prc)
+    # new_hash = {}
+    # self.each do |k, v|
 
+    def my_select(&prc)
+        if prc == nil
+        self.select {|k,v| k == v}
+        else 
+        self.select {|k,v| prc.call(k, v) } 
+        end
     end
 end
+
 
 class String
     # Write a method, String#substrings, that takes in a optional length argument
@@ -85,6 +112,7 @@ class String
     # "bootcamp".caesar_cipher(2) #=> "dqqvecor"
     # "zebra".caesar_cipher(4)    #=> "difve"
     def caesar_cipher(num)
+
 
     end
 end
